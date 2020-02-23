@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.time.Duration;
 
 import org.apache.commons.io.FilenameUtils;
 import org.eclipse.smarthome.core.audio.AudioFormat;
@@ -355,7 +356,8 @@ class GoogleCloudAPI {
                 voiceSelectionParams);
 
         HttpRequestBuilder builder = HttpRequestBuilder.postTo(SYTNHESIZE_SPEECH_URL)
-                .withHeader(AUTH_HEADER_NAME, getAuthorization()).withContent(gson.toJson(request), APPLICATION_JSON);
+                .withHeader(AUTH_HEADER_NAME, getAuthorization()).withContent(gson.toJson(request), APPLICATION_JSON)
+                .withTimeout(Duration.ofSeconds(15));
 
         SynthesizeSpeechResponse synthesizeSpeechResponse = gson.fromJson(builder.getContentAsString(),
                 SynthesizeSpeechResponse.class);
